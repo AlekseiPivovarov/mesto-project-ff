@@ -1,0 +1,40 @@
+import { openModal } from "./modal";
+
+const cardTemplate = document.querySelector('#card-template').content; 
+const popupImage = document.querySelector('.popup_type_image');
+
+export function deleteCard(evt) {                          
+    const cardItem = evt.target.closest('.card');
+    cardItem.remove();
+}
+
+export function likeCard(evt) {                                   
+    const button = evt.target.closest('.card__like-button');
+    button.classList.toggle('card__like-button_is-active');
+}
+
+export function createCard(item, deleteCard, likeCard) {
+    const cardElement = cardTemplate.querySelector('.places__item').cloneNode(true);
+    const cardImage = cardElement.querySelector('.card__image');
+    cardImage.src = item.link;
+    cardImage.alt = item.name;
+    cardElement.querySelector('.card__title').textContent = item.name;
+    cardElement.addEventListener('click', (evt)=> {
+        if (evt.target.classList.contains('card__delete-button')) {
+            deleteCard(evt);
+        }
+
+        if (evt.target.classList.contains('card__like-button')) {
+            likeCard(evt);
+        }
+
+        if (evt.target.classList.contains('card__image')) {
+            openModal(popupImage);
+            popupImage.querySelector('.popup__image').src = cardImage.src;
+            popupImage.querySelector('.popup__image').alt = cardImage.alt;
+        }
+    })
+   
+    return cardElement;
+}
+
