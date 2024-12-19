@@ -3,20 +3,24 @@ import {initialCards} from './cards';
 import { createCard, deleteCard, likeCard} from './components/card';
 import { openModal, closeModal, modalWindow} from './components/modal';
 
-export const placesList = document.querySelector('.places__list');
+const placesList = document.querySelector('.places__list');
 const popupCard = document.querySelector('.popup_type_new-card');
 const popupEdit = document.querySelector('.popup_type_edit');
-
 const editButton = document.querySelector('.profile__edit-button');
 const addButton = document.querySelector('.profile__add-button');
-
-
-export const formEdit = document.forms['edit-profile'];
+const formEdit = document.forms['edit-profile'];
 const formCard = document.forms['new-place'];
 
 //Карточки
+function openPopupImage(evt) {
+    const popupImage = document.querySelector('.popup_type_image');
+    openModal(popupImage);
+    popupImage.querySelector('.popup__image').src = evt.target.src;
+    popupImage.querySelector('.popup__image').alt = evt.target.alt;
+}
+
 const cardArray = initialCards.map((item)=>{
-    return createCard(item, deleteCard, likeCard);
+    return createCard(item, deleteCard, likeCard, openPopupImage);
 })
 
 cardArray.forEach(card => {
@@ -38,10 +42,8 @@ document.querySelectorAll('.popup').forEach ((item)=> {
     });
 })
 
-
 //Формы
-
-function handleFormSubmit(evt) {
+function handleProfileFormSubmit(evt) {
     evt.preventDefault(); 
     const nameInput = formEdit.elements.name.value;
     const jobInput = formEdit.elements.description.value;
@@ -59,12 +61,17 @@ function createNewCard(evt) {
           name: `${name}`,
           link: `${link}`,
         };
-    const card = createCard(cardInfo, deleteCard, likeCard);
+    const card = createCard(cardInfo, deleteCard, likeCard, openPopupImage);
     placesList.prepend(card);
     formCard.reset();
     closeModal(modalWindow);
 }
 
-formEdit.addEventListener('submit', handleFormSubmit); 
+function editForm() {
+    formEdit.elements.name.value = document.querySelector('.profile__title').textContent;
+    formEdit.elements.description.value = document.querySelector('.profile__description').textContent;
+}
 
+formEdit.addEventListener('submit', handleProfileFormSubmit); 
 formCard.addEventListener('submit', createNewCard);
+editButton.addEventListener('click', editForm);
