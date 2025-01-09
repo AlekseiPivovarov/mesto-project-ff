@@ -8,6 +8,22 @@
   background-position: center;
   margin: 0 29px 0 0;
   background-image: url('../../../images/avatar.jpg');
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.avatar {
+  block-size: 100%;
+  inline-size: 100%;
+}
+
+.avatar:hover {
+  background-color: rgba(0, 0, 0, 0.80);
+  background-image: url('../../../images/avatar-edit.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size:auto;
 }
 
 @media screen and (max-width: 740px) {

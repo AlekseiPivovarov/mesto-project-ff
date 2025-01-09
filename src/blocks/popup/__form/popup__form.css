@@ -1,3 +1,21 @@
 .popup__form {
   margin-top: 27px;
 }
+
+.form__input-error {
+  color: #F00;
+  font-family: Inter;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  display: none;
+}
+
+.form__input-error_active {
+  display: flex;
+}
+
+input.form__input_type_error {
+  border-bottom: 1px solid #F00;
+}
