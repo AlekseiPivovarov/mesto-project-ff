@@ -109,7 +109,7 @@ formEdit.addEventListener('submit', (evt) => {
 
 formCard.addEventListener('submit', (evt)=> {
     evt.preventDefault();
-    formEdit.querySelector('.button').textContent = 'Сохранение...'
+    formCard.querySelector('.button').textContent = 'Сохранение...'
     saveNewCard(formCard.elements['place-name'].value, formCard.elements.link.value)
     .then((data)=> {
         createNewCard(evt, data);
@@ -118,7 +118,7 @@ formCard.addEventListener('submit', (evt)=> {
         console.log(err);
     })
     .finally(()=> {
-        formEdit.querySelector('.button').textContent = 'Сохранить';
+        formCard.querySelector('.button').textContent = 'Сохранить';
     })
     
 });
