@@ -95,7 +95,7 @@ function editForm() {
 formEdit.addEventListener('submit', (evt) => {
     evt.preventDefault();
     formEdit.querySelector('.button').textContent = 'Сохранение...'
-    updateUserInfo(profileTitle.textContent, profileDescription.textContent)
+    updateUserInfo(formEdit.elements.name.value, formEdit.elements.description.value)
     .then(()=> {
         handleProfileFormSubmit(evt);
     })
