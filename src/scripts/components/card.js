@@ -1,22 +1,33 @@
 // const cardTemplate = document.querySelector('#card-template').content; 
 
 export function deleteCard(cardId, cardElement, deleteCardOnServer) {
-    deleteCardOnServer(cardId);
-    cardElement.remove();
+    deleteCardOnServer(cardId)
+    .then(cardElement.remove())
+    .catch((err)=> {
+        console.log(err);
+    })
+    
 }
    
 export function likeCard(evt, updateCardLikes, deleteCardLikes, cardID, likeCount) {
     const button = evt.target.closest('.card__like-button');
-    button.classList.toggle('card__like-button_is-active');
-    if (button.classList.contains('card__like-button_is-active')) {
+    if (!button.classList.contains('card__like-button_is-active')) {
         updateCardLikes(cardID)
         .then(card=> {
             likeCount.textContent = card.likes.length;
+            button.classList.toggle('card__like-button_is-active');
+        })
+        .catch((err)=> {
+            console.log(err);
         })
     } else {
         deleteCardLikes(cardID)
         .then(card=> {
             likeCount.textContent = card.likes.length;
+            button.classList.toggle('card__like-button_is-active');
+        })
+        .catch((err)=> {
+            console.log(err);
         })
     }
 }

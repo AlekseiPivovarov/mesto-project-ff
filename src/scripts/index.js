@@ -93,19 +93,31 @@ function editForm() {
 }
 
 formEdit.addEventListener('submit', (evt) => {
-    handleProfileFormSubmit(evt);
+    evt.preventDefault();
     formEdit.querySelector('.button').textContent = 'Сохранение...'
     updateUserInfo(profileTitle.textContent, profileDescription.textContent)
     .then(()=> {
+        handleProfileFormSubmit(evt);
+    })
+    .catch((err)=> {
+        console.log(err);
+    })
+    .finally(()=> {
         formEdit.querySelector('.button').textContent = 'Сохранить';
     })
 });
 
 formCard.addEventListener('submit', (evt)=> {
+    evt.preventDefault();
     formEdit.querySelector('.button').textContent = 'Сохранение...'
     saveNewCard(formCard.elements['place-name'].value, formCard.elements.link.value)
     .then((data)=> {
         createNewCard(evt, data);
+    })
+    .catch((err)=> {
+        console.log(err);
+    })
+    .finally(()=> {
         formEdit.querySelector('.button').textContent = 'Сохранить';
     })
     
@@ -127,6 +139,9 @@ Promise.all([getUserInfo(), getCardList()])
             placesList.append(card);
         });
 })
+.catch((err) => {
+    console.log(err);
+})
 
 profileImage.addEventListener('click', ()=> {
     openModal(popupAvatar);
@@ -141,12 +156,18 @@ formAvatar.addEventListener('submit', (evt)=> {
         .then(user => {
             profileImage.style.backgroundImage = `url(${user.avatar})`;
         })
+        .catch((err) => {
+            console.log(err);
+        })
     })
     .then(()=> {
         clearValidation(formAvatar, validationConfig);
         formAvatar.elements['avatar-link'].value = '';
-        closeModal(popupAvatar);
         formAvatar.querySelector('.button').textContent = 'Сохранить';
+        closeModal(popupAvatar);
+    })
+    .catch((err)=> {
+        console.log(err);
     })
   
 })
